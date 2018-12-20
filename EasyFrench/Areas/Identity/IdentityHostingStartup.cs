@@ -15,6 +15,15 @@ namespace EasyFrench.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(
+                        context.Configuration.GetConnectionString("DefaultConnection")));
+
+                services.AddDefaultIdentity<ApplicationUser>(config =>
+                {
+                    config.SignIn.RequireConfirmedEmail = true;
+                })
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }

@@ -2,17 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-EasyFrench-52286A70-5B05-4B5A-97B2-0040FC33F426</UserSecretsId>
+    <!--<UserSecretsId>aspnet-EasyFrench-52286A70-5B05-4B5A-97B2-0040FC33F426</UserSecretsId>-->
+    <UserSecretsId>aspnet-EasyFrench-1234</UserSecretsId>
+
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Services\" />
+    <PackageReference Include="SendGrid" Version="9.10.0" />
   </ItemGroup>
 
 </Project>
