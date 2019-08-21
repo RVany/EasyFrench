@@ -10,23 +10,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using EasyFrench.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyFrench.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
+        [BindProperty]
+        public ApplicationUser applicationUser { get; set; }
+
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
+        
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -78,7 +85,18 @@ namespace EasyFrench.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    applicationUser = await _context.ApplicationUser.FirstOrDefaultAsync(m => m.Email == Input.Email);
+                    Startup.userID = applicationUser.Id;
+                    if (IsAdminUser(Input.Email))
+                    {
+                        Startup.isAdmin = true;                        
+                        return Redirect("~/Admin");
+                    }
+                    else
+                    {
+                        return LocalRedirect(returnUrl);
+                    }   
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -98,6 +116,15 @@ namespace EasyFrench.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+        private bool IsAdminUser(string userEmail)
+        {
+            // return _context.Level.Any(e => e.ID == id);
+            if(userEmail == "vanmathyrr@gmail.com")
+            return true;
+            else
+            return false;
+
         }
     }
 }

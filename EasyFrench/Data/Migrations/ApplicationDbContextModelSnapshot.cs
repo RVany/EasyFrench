@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EasyFrench.Data.Migrations
+namespace EasyFrench.Data.Migrations.EasyFrench.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,28 @@ namespace EasyFrench.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("EasyFrench.Data.Answer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AnswerText")
+                        .IsRequired();
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("QuestionID");
+
+                    b.Property<bool>("Status");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
+
+                    b.ToTable("Answer");
+                });
 
             modelBuilder.Entity("EasyFrench.Data.ApplicationRole", b =>
                 {
@@ -72,7 +94,9 @@ namespace EasyFrench.Data.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<DateTime>("JoinedDate");
+                    b.Property<DateTime>("JoinedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("LastName");
 
@@ -114,8 +138,7 @@ namespace EasyFrench.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserTypeID")
-                        .IsUnique();
+                    b.HasIndex("ApplicationUserTypeID");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -142,6 +165,153 @@ namespace EasyFrench.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("ApplicationUserType");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Difficulty", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("DifficultyLevel")
+                        .IsRequired();
+
+                    b.Property<int>("Points");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Difficulty");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Exercise", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("TitleEnglish");
+
+                    b.Property<string>("TitleFrench")
+                        .IsRequired();
+
+                    b.Property<int>("TopicID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TopicID");
+
+                    b.ToTable("Exercise");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Level", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Level");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Question", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("DifficultyID");
+
+                    b.Property<int>("ExerciseID");
+
+                    b.Property<string>("QuestionEnglish")
+                        .IsRequired();
+
+                    b.Property<string>("QuestionFrench")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DifficultyID");
+
+                    b.HasIndex("ExerciseID");
+
+                    b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.QuestionLevel", b =>
+                {
+                    b.Property<int>("QuestionID");
+
+                    b.Property<int>("LevelID");
+
+                    b.HasKey("QuestionID", "LevelID");
+
+                    b.HasIndex("LevelID");
+
+                    b.ToTable("QuestionLevel");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Topic", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("TitleEnglish");
+
+                    b.Property<string>("TitleFrench")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Topic");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.TopicLevel", b =>
+                {
+                    b.Property<int>("TopicID");
+
+                    b.Property<int>("LevelID");
+
+                    b.HasKey("TopicID", "LevelID");
+
+                    b.HasIndex("LevelID");
+
+                    b.ToTable("TopicLevel");
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Video", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("TopicID");
+
+                    b.Property<string>("VideoID")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TopicID");
+
+                    b.ToTable("Video");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -234,11 +404,74 @@ namespace EasyFrench.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("EasyFrench.Data.Answer", b =>
+                {
+                    b.HasOne("EasyFrench.Data.Question", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("EasyFrench.Data.ApplicationUser", b =>
                 {
                     b.HasOne("EasyFrench.Data.ApplicationUserType", "ApplicationUserType")
-                        .WithOne("ApplicationUser")
-                        .HasForeignKey("EasyFrench.Data.ApplicationUser", "ApplicationUserTypeID")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("ApplicationUserTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Exercise", b =>
+                {
+                    b.HasOne("EasyFrench.Data.Topic", "Topic")
+                        .WithMany("Exercises")
+                        .HasForeignKey("TopicID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Question", b =>
+                {
+                    b.HasOne("EasyFrench.Data.Difficulty", "Difficulty")
+                        .WithMany("Questions")
+                        .HasForeignKey("DifficultyID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EasyFrench.Data.Exercise", "Exercise")
+                        .WithMany("Questions")
+                        .HasForeignKey("ExerciseID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.QuestionLevel", b =>
+                {
+                    b.HasOne("EasyFrench.Data.Level", "Level")
+                        .WithMany("QuestionsLevels")
+                        .HasForeignKey("LevelID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EasyFrench.Data.Question", "Question")
+                        .WithMany("QuestionLevels")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.TopicLevel", b =>
+                {
+                    b.HasOne("EasyFrench.Data.Level", "Level")
+                        .WithMany("TopicLevels")
+                        .HasForeignKey("LevelID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EasyFrench.Data.Topic", "Topic")
+                        .WithMany("TopicLevels")
+                        .HasForeignKey("TopicID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EasyFrench.Data.Video", b =>
+                {
+                    b.HasOne("EasyFrench.Data.Topic", "Topic")
+                        .WithMany("Videos")
+                        .HasForeignKey("TopicID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

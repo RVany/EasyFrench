@@ -1,0 +1,72 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageTopic.EditTopicModel
+@{
+    ViewData["Title"] = "EditTopic";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <h2>EditTopic</h2>    
+ <hr />
+ <div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Topic.ID" />
+            <div class="form-group">
+                <label asp-for="Topic.TitleEnglish" class="control-label"></label>
+                <input asp-for="Topic.TitleEnglish" class="form-control" />
+                <span asp-validation-for="Topic.TitleEnglish" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.TitleFrench" class="control-label"></label>
+                <input asp-for="Topic.TitleFrench" class="form-control" />
+                <span asp-validation-for="Topic.TitleFrench" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.Description" class="control-label"></label>
+                <input asp-for="Topic.Description" class="form-control" />
+                <span asp-validation-for="Topic.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+
+                                foreach (var level in Model.AssignedLevelDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td style="padding-right: 30px;">
+                                        <input type="checkbox"
+                                               name="selectedLevels"
+                                               value="@level.LevelID"
+                                               @(Html.Raw(level.Assigned ? "checked=\"checked\"" : "")) />
+                                        @level.Title
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                    </table>                    
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

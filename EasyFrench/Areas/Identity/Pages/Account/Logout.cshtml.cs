@@ -29,6 +29,7 @@ namespace EasyFrench.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            Startup.isAdmin = false;
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
@@ -37,6 +38,7 @@ namespace EasyFrench.Areas.Identity.Pages.Account
             }
             else
             {
+                
                 return Page();
             }
         }

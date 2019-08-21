@@ -19,6 +19,9 @@ namespace EasyFrench
 {
     public class Startup
     {
+        public static bool isAdmin = false;
+        public static string userID;
+        public static int CurrentScore = 0;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,10 +41,7 @@ namespace EasyFrench
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-                          
-
-            
+                    Configuration.GetConnectionString("DefaultConnection")));           
 
 
             services.Configure<IdentityOptions>(options =>
@@ -53,9 +53,6 @@ namespace EasyFrench
 
             });
 
-
-
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // requires
@@ -63,6 +60,11 @@ namespace EasyFrench
             // using WebPWrecover.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddProgressiveWebApp(            
+                
+                
+                );
+
 
         }
 
@@ -86,7 +88,15 @@ namespace EasyFrench
 
             app.UseAuthentication();
 
+            
             app.UseMvc();
+           // app.UseDefaultFiles();
+            //app.UseStaticFiles();
+           /* app.UseStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true
+            });*/
+
         }
     }
 }

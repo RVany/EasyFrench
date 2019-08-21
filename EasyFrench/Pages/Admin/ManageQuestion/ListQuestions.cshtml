@@ -1,0 +1,101 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageQuestion.ListQuestionsModel
+@{
+    ViewData["Title"] = "ListQuestions";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <p>
+        <a asp-page="AddQuestion">Add New Question</a>
+    </p>
+
+    <h2>List Questions</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Questions[0].QuestionEnglish)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Questions[0].QuestionFrench)
+                </th>
+                <th>
+                    <<<>Answers<>>>
+                </th>
+                <th>
+                    Difficulty
+                </th>
+                <th>
+                    Exercise
+                </th>
+                <th>
+                    Topics
+                </th>
+                <th>
+                    Levels
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var qu in Model.Questions)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => qu.QuestionEnglish)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => qu.QuestionFrench)
+                </td>
+                <td>
+                    @foreach (var answer in qu.Answers)
+                    {
+                        @Html.DisplayFor(modelItem => answer.AnswerText)
+                        if (answer.Status)
+                        {
+                            <span>[Correct]</span><br />
+
+                        }
+                        else
+                        {
+                            <span>[Wrong]</span> <br />
+                        }
+
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => qu.Difficulty.DifficultyLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => qu.Exercise.TitleEnglish)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => qu.Exercise.Topic.TitleEnglish)
+                </td>
+                <td>
+                    @foreach (var topiclevel in qu.Exercise.Topic.TopicLevels)
+                    {
+                        @foreach (var questionlevel in qu.QuestionLevels)
+                        {
+                            if (topiclevel.LevelID == questionlevel.LevelID)
+                            {
+                                @Html.DisplayFor(modelItem => topiclevel.Level.Title) <br />
+                            }
+                        }
+                    }
+
+                </td>
+                <td>
+                    <a asp-page="./EditQuestion" asp-route-id="@qu.ID">Edit</a> |
+
+                    <a asp-page="./RemoveQuestion" asp-route-id="@qu.ID">Remove</a>
+                </td>
+            </tr>
+            }
+        </table>    
+
+}
+

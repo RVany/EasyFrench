@@ -1,60 +1,79 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EasyFrench</title>
+    <meta name="Description" content="Easy French">
+    <title>EasyFrench - @ViewData["Title"]</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+         
+    <link rel="icon" type="image/png" sizes="72x72" href="~/images/icons/icon-72x72.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/icons/icon-96x96.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="~/images/icons/icon-128x128.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="~/images/icons/icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="152x152" href="~/images/icons/icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="384x384" href="~/images/icons/icon-384x384.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="~/images/icons/icon-512x512.png">
+
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-page="/Index" class="navbar-brand">EasyFrench</a>
+   
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-page="/Index" class="icon-bar"><img src="~/images/logo2.png" alt="Easy French"/></a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (Startup.isAdmin)
+                        {
+                            <li><a asp-page="/Admin/Index">Admin Home</a></li>
+                            <li><a asp-page="/Admin/ManageLevel/ListLevel">Levels</a></li>
+                            <li><a asp-page="/Admin/ManageTopic/ListTopic">Topics</a></li>
+                            <li><a asp-page="/Admin/ManageExersice/ListExersice">Exersices</a></li>
+                            <li><a asp-page="/Admin/ManageQuestion/ListQuestions">Questions</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-page="/Index">Home</a></li>
+                            <li><a asp-page="/About">About</a></li>
+                            <li><a asp-page="/Contact">Contact</a></li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
-                </ul>
-                <partial name="_LoginPartial" />
-            </div>
+        </nav>
+
+        <partial name="_CookieConsentPartial" />
+    <main> 
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; 2018 - EasyFrench</p>
+            </footer>
         </div>
-    </nav>
-
-    <partial name="_CookieConsentPartial" />
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - EasyFrench</p>
-        </footer>
-    </div>
-
-    <environment include="Development">
+    </main>
+   
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
+    
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
@@ -68,8 +87,9 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+   
 
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

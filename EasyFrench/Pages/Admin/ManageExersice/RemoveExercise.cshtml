@@ -1,0 +1,46 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageExersice.RemoveExerciseModel
+@{
+    ViewData["Title"] = "RemoveExercise";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <h2>Remove Exercise</h2>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Level</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Exercise.TitleEnglish)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Exercise.TitleEnglish)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Exercise.TitleFrench)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Exercise.TitleFrench)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Exercise.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Exercise.Description)
+            </dd>
+        </dl>
+        <form method="post">
+            <input type="hidden" asp-for="Exercise.ID" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-page="./ListExersice">Back to List</a>
+        </form>
+    </div>
+ }
+
+
+

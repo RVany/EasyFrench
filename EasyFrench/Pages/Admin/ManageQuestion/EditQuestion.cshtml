@@ -1,0 +1,109 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageQuestion.EditQuestionModel
+@{
+    ViewData["Title"] = "EditQuestion";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <h2>Edit Question</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Question.ID" />
+
+                <div class="form-group">
+                    <label asp-for="Question.QuestionEnglish" class="control-label"></label>
+                    <input asp-for="Question.QuestionEnglish" class="form-control" />
+                    <span asp-validation-for="Question.QuestionEnglish" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Question.QuestionFrench" class="control-label"></label>
+                    <input asp-for="Question.QuestionFrench" class="form-control" />
+                    <span asp-validation-for="Question.QuestionFrench" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Question.Description" class="control-label"></label>
+                    <input asp-for="Question.Description" class="form-control" />
+                    <span asp-validation-for="Question.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Question.DifficultyID" class="control-label"></label>
+                    <select asp-for="Question.DifficultyID" class="form-control"
+                            asp-items="@Model.DifficultiesSL"></select>
+                    <span asp-validation-for="Question.DifficultyID" class="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Question.ExerciseID" class="control-label"></label>
+                    <select asp-for="Question.ExerciseID" class="form-control"
+                            asp-items="@Model.ExerciesSL"></select>
+                    <span asp-validation-for="Question.ExerciseID" class="text-danger" />
+                </div>
+                <div class="form-group">
+
+                    <label asp-for="Answer[0].AnswerText" class="control-label"></label>
+                    <input asp-for="Answer[0].AnswerText" class="form-control" />
+                    <span asp-validation-for="Answer[0].AnswerText" class="text-danger"></span>
+                    <input asp-for="Answer[0].Status" class="form-control" />
+                    <span asp-validation-for="Answer[0].Status" class="text-danger"></span>
+                    <input type="hidden" asp-for="Answer[0].ID" />
+
+
+                    <label asp-for="Answer[1].AnswerText" class="control-label"></label>
+                    <input asp-for="Answer[1].AnswerText" class="form-control" />
+                    <span asp-validation-for="Answer[1].AnswerText" class="text-danger"></span>
+                    <input type="hidden" asp-for="Answer[1].ID" />
+                    <input asp-for="Answer[1].Status" class="form-control" />
+                    <span asp-validation-for="Answer[1].Status" class="text-danger"></span>
+
+                    <label asp-for="Answer[2].AnswerText" class="control-label"></label>
+                    <input asp-for="Answer[2].AnswerText" class="form-control" />
+                    <input type="hidden" asp-for="Answer[2].ID" />
+                    <span asp-validation-for="Answer[2].AnswerText" class="text-danger"></span>
+                    <input asp-for="Answer[2].Status" class="form-control" />
+                    <span asp-validation-for="Answer[2].Status" class="text-danger"></span>
+
+                    <label asp-for="Answer[3].AnswerText" class="control-label"></label>
+                    <input asp-for="Answer[3].AnswerText" class="form-control" />
+                    <input type="hidden" asp-for="Answer[3].ID" />
+                    <span asp-validation-for="Answer[3].AnswerText" class="text-danger"></span>
+                    <input asp-for="Answer[3].Status" class="form-control" />
+                    <span asp-validation-for="Answer[3].Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @{int i = 0;
+                        
+                    }
+                    <label asp-for="Levels[i].Title" class="control-label">Levels</label>
+                    @foreach (var level in Model.Levels)
+                    {
+                        bool selected = false;
+                        @foreach (var questionlevel in Model.Question.QuestionLevels)
+                        {
+                            if (level.ID == questionlevel.LevelID)
+                            {
+                                selected = true;
+                            }                           
+
+                        }
+                        <input type="checkbox"
+                               name="selectedLevels"
+                               value="@level.ID"
+                               @(Html.Raw(selected ? "checked=\"checked\"" : "")) />
+                        @level.Title
+                    }
+
+                    
+                </div>
+                <div class="form-group">
+                     <input type="submit" value="Update" class="btn btn-default" />
+                </div>
+            </form>
+        </div> 
+    </div>        
+}
+

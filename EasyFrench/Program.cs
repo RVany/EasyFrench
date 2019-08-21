@@ -15,6 +15,10 @@ namespace EasyFrench
 {
     public class Program
     {
+        public static Videos Videos = new Videos();
+        public static QuestionStore QuestionStore = new QuestionStore();
+
+
         public static void Main(string[] args)
         {
             //CreateWebHostBuilder(args).Build().Run();

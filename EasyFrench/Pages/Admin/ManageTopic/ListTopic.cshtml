@@ -1,0 +1,79 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageTopic.ListTopicModel
+@{
+    ViewData["Title"] = "ListTopic";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <h2>ListTopic</h2>
+    <p>
+        <a asp-page="AddTopic">Add New Topic</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Topic[0].TitleEnglish)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Topic[0].TitleFrench)
+                </th>
+                <th>
+
+                    Levels
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Topic[0].Description)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var topic in Model.Topic)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => topic.TitleEnglish)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => topic.TitleFrench)
+                    </td>
+
+                    <td>
+                        @foreach (var topiclevel in topic.TopicLevels)
+                        {
+
+                            @Html.DisplayFor(modelItem => topiclevel.Level.Title)<br>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => topic.Description)
+                    </td>
+                    <td>
+                        <a asp-page="./EditTopic" asp-route-id="@topic.ID">Edit</a> |
+
+                        <a asp-page="./RemoveTopic" asp-route-id="@topic.ID">Remove</a>
+                    </td>
+                </tr>
+             }
+        </tbody>
+    </table>
+    
+        var prevDisabled = !Model.Topic.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Topic.HasNextPage ? "disabled" : "";
+    
+
+    <a asp-page="./ListTopic"
+       asp-route-pageIndex="@(Model.Topic.PageIndex - 1)"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./ListTopic"
+       asp-route-pageIndex="@(Model.Topic.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+}
+

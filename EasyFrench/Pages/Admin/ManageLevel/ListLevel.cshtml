@@ -1,0 +1,60 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageLevel.ListLevelModel
+@{
+    ViewData["Title"] = "ListLevel";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <h2>List of Levels</h2>
+    <p>
+        <a asp-page="AddLevel">Add New Level</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Level[0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Level[0].Description)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Level)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-page="./EditLevel" asp-route-id="@item.ID">Modify</a> |
+                        <a asp-page="./RemoveLevel" asp-route-id="@item.ID">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+        var prevDisabled = !Model.Level.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Level.HasNextPage ? "disabled" : "";
+    
+
+    <a asp-page="./ListLevel"
+       asp-route-pageIndex="@(Model.Level.PageIndex - 1)"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./ListLevel"
+       asp-route-pageIndex="@(Model.Level.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+
+
+}

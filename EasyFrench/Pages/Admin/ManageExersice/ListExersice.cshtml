@@ -1,0 +1,83 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ManageExersice.ListExersiceModel
+@{
+    ViewData["Title"] = "ListExersice";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h3>@Model.Message</h3>
+@if (Model.isAdmin)
+{
+    <h2>ListExersice</h2>
+    <p>
+        <a asp-page="AddExercise">Add New Exercise</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Exercise[0].TitleEnglish)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Exercise[0].TitleFrench)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Exercise[0].Topic)
+                </th>
+               <!-- <th>
+                    Levels
+                </th> -->
+                <th>
+                    @Html.DisplayNameFor(model => model.Exercise[0].Description)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exercise in Model.Exercise)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => exercise.TitleEnglish)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => exercise.TitleFrench)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => exercise.Topic.TitleEnglish)
+                    </td>
+                    <!--<td>
+                        @foreach (var topiclevel in exercise.Topic.TopicLevels)
+                        {
+
+                            @Html.DisplayFor(modelItem => topiclevel.Level.Title)<br>
+                        }
+                    </td>-->
+                    <td>
+                        @Html.DisplayFor(modelItem => exercise.Description)
+                    </td>
+                    <td>
+                        <a asp-page="./EditExercise" asp-route-id="@exercise.ID">Edit</a> |
+
+                        <a asp-page="./RemoveExercise" asp-route-id="@exercise.ID">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    var prevDisabled = !Model.Exercise.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Exercise.HasNextPage ? "disabled" : "";
+
+
+    <a asp-page="./ListTopic"
+       asp-route-pageIndex="@(Model.Exercise.PageIndex - 1)"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./ListTopic"
+       asp-route-pageIndex="@(Model.Exercise.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+}
+

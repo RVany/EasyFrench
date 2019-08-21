@@ -1,0 +1,110 @@
+﻿@page
+@model EasyFrench.Pages.Admin.ExerciseModel
+@{
+    ViewData["Title"] = "Exercise";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var countTopic = 0;
+    
+}
+
+<div id="@Model.cssClass" class="level" style="width:100%;">
+    <p class="heading" >@Model.Level.Title<!--<span class="heading" style="text-align:right; float:right;">-->(@Model.Level.Title)</p>
+    @foreach (var topic in Model.Topics)
+    {
+        countTopic++;
+        var countEx = 1;
+    <div class="topic">
+        <p class="heading2">
+            @Html.DisplayFor(modelItem => topic.TitleEnglish) (
+            @Html.DisplayFor(modelItem => topic.TitleFrench) )
+        </p>
+        @foreach (var exercise in Model.Exercises)
+        {
+
+            @if (exercise.TopicID == topic.ID)
+            {
+                var questions = new HashSet<int>(exercise.Questions.Select(c => c.ID));
+
+                var questionLevels = new HashSet<int>(Model.Level.QuestionsLevels.Select(c => c.QuestionID));
+
+                bool hasQuestion = false;
+
+                @foreach (var q in questions)
+                {
+                    if (questionLevels.Contains(q))
+                    {
+                        hasQuestion = true;
+                    }
+                }
+
+                if (questions.Count > 0 && hasQuestion)
+                {
+                    <div>
+                    <a asp-page="./Question" asp-route-QNo="0" asp-route-levelId="@Model.Level.ID"
+                       asp-route-topicId="@topic.ID" asp-route-exerciseId="@exercise.ID"
+                       asp-route-cssclass="@Model.cssClass">
+                        <p>
+                            @countTopic.@countEx @Html.DisplayFor(modelItem => exercise.TitleEnglish) <br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            @Html.DisplayFor(modelItem => exercise.TitleFrench)
+                        </p><br />
+                    </a>
+
+                </div>
+                countEx++;
+                }                
+            }
+        }
+        
+        <div>           
+            <a asp-page="./Lesson" asp-route-levelId="@Model.Level.ID">
+              <p>@countTopic.@countEx Lesson</p>
+            </a>               
+        </div>
+
+        @{ countEx++;
+        }
+        <div>
+            <a href="~/Worksheet/DayOfTheWeek.pdf"><p>@countTopic.@countEx Worksheet</p></a>
+        </div>
+        @{ countEx++;
+        }
+        <div>
+            <a asp-page="./Videos" asp-route-levelId="@Model.Level.ID"
+               asp-route-topicId="@topic.ID" asp-route-search="FRENCH @topic.TitleEnglish"
+               asp-route-cssclass="@Model.cssClass" asp-route-video="0">
+                <p>@countTopic.@countEx Video</p>
+            </a>
+        </div>
+    </div>
+    }
+    <div class="topic">
+        <p class="heading2">
+            Lesson (
+            Lesson )
+        </p>
+        <span class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coming Soon!</span>
+        @{ countTopic++;
+        }
+    </div>
+    <div class="topic">
+        <p class="heading2">
+            Worksheet (
+            Worksheet )
+        </p>
+        <span class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coming Soon!</span>
+        @{ countTopic++;
+        }
+    </div>
+    <div class="topic">
+        <p class="heading2">
+            Video (
+            Video )
+        </p>
+        <span class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coming Soon!</span>
+        @{ countTopic++;
+        }
+    </div>
+
+
+</div>

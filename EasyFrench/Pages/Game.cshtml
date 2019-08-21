@@ -1,0 +1,239 @@
+﻿@page
+
+@model GameModel
+
+@{
+
+    ViewData["Title"] = "Game";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+
+<style>
+
+    body {
+        font-family: verdana;
+        color: #444;
+    }
+
+
+
+    .game {
+        text-decoration: none;
+        font-size: 20px;
+        margin-right: 20px;
+        color: #fff;
+        background: #3C8FB7;
+        padding: 4px 8px;
+        border: 0;
+        cursor: pointer;
+    }
+
+
+
+    .alphabet {
+        width: 288px;
+        height: 310px;
+        margin: 0 auto;
+    }
+
+
+
+        .alphabet div {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            float: left;
+            text-align: center;
+            line-height: 70px;
+            font-size: 40px;
+        }
+
+
+
+    .column {
+        float: left;
+        margin-left: 10%;
+    }
+
+
+
+    #result input {
+        border: 0;
+        border-bottom: 1px solid #ccc;
+        text-transform: uppercase;
+    }
+
+
+
+    #result, #error, #words {
+        margin: 20px auto;
+        display: block;
+        width: 320px;
+        text-transform: uppercase;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+
+        //function for array
+
+        function in_array(what, where) {
+
+            for (var i = 0; i < where.length; i++) {
+
+                if (what.toUpperCase() == where[i]) {
+
+                    word_array.splice(i, 1);
+
+                    return true;
+
+                }
+
+            }
+
+            return false;
+
+        }
+
+
+
+        //Words days of week
+
+        word_array = ['LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI', 'DIMANCHE'];
+
+
+
+        //word input
+
+        $('.alphabet div').click(function () {
+
+            $('#error').text('');
+
+            $('#result input').val($('#result input').val() + $(this).text());
+
+        });
+
+
+
+        //Check
+
+        $('#result button').click(function () {
+
+
+
+            if (in_array($('#result input').val(), word_array)) {
+
+                $('#words').append('<br><span>' + $('#result input').val() + '</span>');
+
+
+
+                if (word_array.length == 0) {
+
+                    $('#error').text('Congratulations! You have guessed all the words!');
+
+                }
+
+
+
+            } else {
+
+                $('#error').text('There is no such word, or it has already been found.');
+
+            }
+
+
+
+            $('#result input').val('');
+
+        });
+
+    });
+
+</script>
+
+
+
+<center>
+
+    <h3>The Words Finder</h3>
+
+    <h4>Spell the Weekdays in French! </h4>
+
+</center>
+
+
+
+<div class="column">
+
+    <div id="error"></div>
+
+    <div id="words">Found words :</div>
+
+</div>
+
+
+
+<div id="result">
+
+    <input>
+
+    <button class="game">Check</button>
+
+</div>
+
+
+
+<div class="alphabet">
+
+    <div>A</div>
+
+    <div>B</div>
+
+    <div>C</div>
+
+    <div>E</div>
+
+    <div>L</div>
+
+    <div>O</div>
+
+    <div>I</div>
+
+    <div>M</div>
+
+    <div>S</div>
+
+    <div>D</div>
+
+    <div>R</div>
+
+    <div>J</div>
+
+    <div>V</div>
+
+    <div>H</div>
+
+    <div>N</div>
+
+    <div>U</div>
+
+</div>
+
+
+
+<center>
+    <script type="text/javascript">var curent_url = document.URL; document.write("<a class='game' href='" + curent_url + "'>Start again</a>");</script>
+</center>

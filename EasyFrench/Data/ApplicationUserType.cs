@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EasyFrench.Data
 {
@@ -12,7 +13,9 @@ namespace EasyFrench.Data
         public string Description { get; set; }
 
         //Navigation Property
-        public ApplicationUser ApplicationUser { get; set; }
+        
+        public ICollection<ApplicationUser> ApplicationUsers { get; set; }
+
 
     }
 }

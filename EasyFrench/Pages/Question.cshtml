@@ -1,0 +1,61 @@
+﻿@page
+@model EasyFrench.Pages.QuestionModel
+@{
+
+    ViewData["Title"] = "Question";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+    var current_question = Model.Question;
+    int nextQNo = Model._QNo + 1;
+    
+}
+
+<div id="@Model.cssClass" class="level" style="width:100%;">
+    <div id="question" style="width:70%;float:left;">
+        <p class="heading3">
+            @Model.Level.Title (@Model.Level.Title) > @Model.Topic.TitleEnglish (@Model.Topic.TitleFrench) >
+            @Model.Exercise.TitleEnglish [@Model.Exercise.TitleFrench]
+        </p>
+
+
+        @if (Model.IsComplete || Model.Question == null)
+        {
+            <p class="heading">@Model.Message </p>
+        }
+        else
+        {
+            <form method="POST">
+
+                <p class="question">
+                    @nextQNo.   @Html.DisplayFor(modelItem => current_question.QuestionEnglish) <br />
+                    (@Html.DisplayFor(modelItem => current_question.QuestionFrench) )
+                    <span style="font-weight:700">[@current_question.Difficulty.Points Points ]</span>
+                </p>
+                @foreach (var answer in current_question.Answers)
+                {
+                    <input name="answer" type="radio" value="@answer.AnswerText" /> <p class="answer"> @answer.AnswerText </p>
+                }
+                <input type="hidden" name="cssClass" value="@Model.cssClass" />
+                <input type="hidden" name="levelId" value="@Model.Level.ID" />
+                <input type="hidden" name="topicId" value="@Model.Topic.ID" />
+                <input type="hidden" name="exerciseId" value="@Model.Exercise.ID" />
+                <input type="hidden" name="QNo" value="@nextQNo" />
+                <input style="margin-left: 200px;" type="submit" class="btn button0" value="Check the Answer" onclick="return radioValidation();" />
+            </form>
+            <p id="msg" style="text-align:center;"></p>
+        }
+    </div><!--End of Question-->
+    <div id="score" style="text-align:right">
+        <p class="heading2">
+            Question Answered <br />
+            @Model._QNo
+
+        </p>
+        <p class="heading2">Time Elapsed</p>
+        <p class="heading2">current Score<br />
+        @Model.CurrentScore out of @Model.TotalScore
+        
+        </p>
+    </div><!--End of Answer-->
+</div><!--End of Level-->
+<p class="heading2"><a asp-page="./Game">Game Words Finder</a></p>

@@ -16,9 +16,9 @@ namespace EasyFrench.Data
         public string Status { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime JoinedDate { get; set; }
+        public DateTime JoinedDate { get; set; }// = DateTime.Now;
 
-        [ForeignKey("ApplicationUserType")]
+       // [ForeignKey("ApplicationUserType")]
         public int ApplicationUserTypeID { get; set; }//Foreign Key
         public ApplicationUserType ApplicationUserType { get; set; } //Navigation Property
 
