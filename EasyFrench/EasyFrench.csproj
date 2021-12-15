@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <!--<UserSecretsId>aspnet-EasyFrench-52286A70-5B05-4B5A-97B2-0040FC33F426</UserSecretsId>-->
-    <UserSecretsId>aspnet-EasyFrench-1234</UserSecretsId>
+    <UserSecretsId>aspnet-EasyFrench-52286A70-5B05-4B5A-97B2-0040FC33F426</UserSecretsId>
+    <!--<UserSecretsId>aspnet-EasyFrench-1234</UserSecretsId>-->
 
   </PropertyGroup>
 

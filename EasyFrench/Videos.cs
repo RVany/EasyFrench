@@ -30,9 +30,11 @@ namespace EasyFrench
                 Titles.Clear();
 
                 // grab 20 vids
-                HttpResponseMessage response = await client.GetAsync("https://www.googleapis.com/youtube/v3/search?key=AIzaSyAvhsM6S8SHqTokQ-O9N5jBBdyE7vzD_qw&part=snippet&maxResults=20&type=video&q=" + search);
+                HttpResponseMessage response = await client.GetAsync("https://www.googleapis.com/youtube/v3/search?key=AIzaSyDAervjvaJLNPGExufYnBIU9M_YN7dcDvA&part=snippet&maxResults=20&type=video&q=" + search);
+
                 if (response.IsSuccessStatusCode)
                 {
+                    
                     Data = await response.Content.ReadAsStringAsync();
                     var results = JsonConvert.DeserializeObject<dynamic>(Data);
                     var items = results.items;

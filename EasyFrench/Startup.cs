@@ -71,7 +71,7 @@ namespace EasyFrench
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+           /* if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -80,8 +80,17 @@ namespace EasyFrench
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+            }*/
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
             }
 
+            if (env.IsProduction() || env.IsStaging() || env.IsEnvironment("Staging_2"))
+            {
+                app.UseExceptionHandler("/Error");
+            }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
